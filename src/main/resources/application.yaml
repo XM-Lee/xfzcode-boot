@@ -1,0 +1,18 @@
+server:
+  port: 18881
+spring:
+  profiles:
+    # use -e spring_profiles_active="dev" in docker run to choose the right profile
+    active: dev
+  datasource:
+    driver-class-name: 'com.mysql.cj.jdbc.Driver'
+  servlet:
+    multipart:
+      max-file-size: 512MB
+      max-request-size: 512MB
+mybatis:
+  #  定义所有操作类的别名所在包
+  type-aliases-package: com.xfzcode.pojo
+  #  所有的mapper映射文件
+  mapper-locations:
+    - classpath:mapper/*.xml

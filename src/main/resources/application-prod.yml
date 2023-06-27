@@ -1,0 +1,31 @@
+springdoc:
+  api-docs:
+    enabled: false
+
+spring:
+  # mysql
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:example}?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: ${DB_USER:example}
+    password: ${DB_PASSWORD:password4example}
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  # redis
+  redis:
+    host: ${REDIS_HOST:localhost}
+    database: ${REDIS_DATABASE:0}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:password4example}
+
+# minio
+minio:
+  endpoint: ${MINIO_HOST:http://localhost:9000}
+  accessKey: ${MINIO_USER:example}
+  secretKey: ${MINIO_PASSWORD:password4example}
+
+# jwt
+jwt:
+  privateKey: classpath:prod/private.key
+  publicKey: classpath:prod/public.key

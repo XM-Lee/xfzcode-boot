@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfzcode.mapper.PermissionMapper">
+
+    <select id="findUserPermissionById" resultType="java.lang.String">
+        SELECT DISTINCT
+            permission.perms
+        FROM
+            sys_users u
+                INNER JOIN sys_users_roles user_role ON u.id = user_role.user_id
+                INNER JOIN sys_role_permission role_permission ON user_role.role_id = role_permission.role_id
+                INNER JOIN sys_permission permission ON role_permission.permission_id = permission.id
+        WHERE
+            u.id = #{userId};
+    </select>
+
+    <select id="findUserPermissionDetailById" resultType="com.xfzcode.pojo.Permission">
+        SELECT DISTINCT
+            permission.*
+        FROM
+            sys_users u
+                INNER JOIN sys_users_roles user_role ON u.id = user_role.user_id
+                INNER JOIN sys_role_permission role_permission ON user_role.role_id = role_permission.role_id
+                INNER JOIN sys_permission permission ON role_permission.permission_id = permission.id
+        WHERE
+            u.id = #{userId};
+    </select>
+
+    <select id="isUsed" resultType="java.lang.Integer">
+        SELECT
+        COUNT( id )
+        FROM
+        role_permission
+        WHERE
+        permission_id IN
+        <foreach collection="idList" item="i" index="index" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+
+    </select>
+
+    <select id="selectListByRoleIds" resultType="com.xfzcode.vo.system.PermissionVo">
+        SELECT
+        permission.*,
+        role_permission.role_id
+        FROM
+        permission,
+        role_permission
+        WHERE
+        role_permission.permission_id = permission.id
+        AND role_permission.role_id IN
+        <foreach collection="idList" item="i" index="index" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+
+    </select>
+
+</mapper>

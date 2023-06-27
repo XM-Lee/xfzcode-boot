@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfzcode.mapper.RoleMapper">
+
+    <select id="findUserRoleDetailById" resultType="com.xfzcode.pojo.Role">
+        SELECT DISTINCT
+            roles.*
+        FROM
+            sys_users u
+                INNER JOIN sys_users_roles user_role ON u.id = user_role.user_id
+
+                INNER JOIN sys_roles roles ON user_role.role_id = roles.id
+        WHERE
+            u.id = #{userId};
+    </select>
+
+    <select id="selectPermissionsByRoleId" resultType="com.xfzcode.vo.system.PermissionsRoleVo">
+        SELECT
+            sr.id as roleId,
+            sp.*
+        FROM
+            sys_role_permission srp
+                LEFT JOIN sys_roles sr ON  sr.id = srp.role_id
+                LEFT JOIN sys_permission  sp ON sp.id = srp.permission_id
+        WHERE sr.id IN
+        <foreach item="id" index="index" collection="roleIds"
+                 open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

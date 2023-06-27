@@ -1,0 +1,50 @@
+spring:
+  # mysql
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/xfzcode-boot?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: password
+    hikari:
+      #连接池名
+      pool-name: DateHikariCP
+      #最小空闲连接数
+      minimum-idle: 10
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 60
+      # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  # redis
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 6000
+    jedis:
+      pool:
+        max-active: 200
+        max-idle: 1000
+        max-wait: -1s
+        min-idle: 5
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+swagger:
+  version: 1.0.0
+  enabled: true
+  #如果此项设置为true，则swagger页面隐藏,线上环境记得改为true
+  production: false
+  basic:
+    # 此项设置为true表示开启账号密码验证
+    enable: false
+    username: powserXMLee
+    password: powserXMLee-swagger@1103
